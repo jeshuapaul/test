@@ -21,7 +21,7 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 			echo "Commit message for MODIFIED FILE: $a ?"
 			read commit_msg
 				if [ -z "$commit_msg" ]; then
-					sudo git commit -m " --- "
+					sudo git commit -m " --- N/A ---"
 				else
 					sudo git commit -m "$commit_msg" "$a"
 				fi
