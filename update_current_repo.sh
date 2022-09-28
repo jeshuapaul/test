@@ -29,6 +29,8 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 	elif [ "$i" == "nothing" ]; then
 		echo "--------------------------------------------------------------------------"
 		echo "No recent changes made to local repo - no updates to push."
+#	elif [ "$i" == "modified" ]; then
+#		for a in 
 	fi
 done
 
