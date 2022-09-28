@@ -50,11 +50,18 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 		echo "--------------------------------------------------------------------------"
 		echo "No recent changes made to local repo have been detected - no updates to push."
 	fi
+done
+# Requesting the URL that the updates need to be pushed to.
+echo "--------------------------------------------------------------------------"
+echo "URL that the updates need to be pushed to ?"
+read repo_url
+sudo git remote add origin "$repo_url"
+
 # This does some git pull and git push magic, to ensure that the contents of your new Github repository, and the folder on you local system are the same.
 sudo git remote -v
 
 # The last word in the command 'main', is not a fixed entry when running git push. It can be replaced with any relevant 'branch_name' that you are using.
 sudo git push origin main
-done
+
 
 #|| [ "$i" == "Untracked" ] || [ "$i" == "new" ]; then
