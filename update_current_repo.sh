@@ -10,7 +10,7 @@ sudo chown jesh:jesh *
 sudo git init
 
 # This will track any changes made to the folder on your system, since the last commit. If this is the first time you are committing the contents of the folder, it will add everything.
-sudo git add *
+sudo git add .
 
 # Checking if any changes have been made to the local repo and then making a decision based on that.
 for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
@@ -18,30 +18,31 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 	if [ "$i" == "modified" ]; then
 		for a in $(git status | grep modified | awk '{print $2}'); do
 			echo "--------------------------------------------------------------------------"
-			echo "Commit message for $a ?"
+			echo "Commit message for MODIFIED FILE: $a ?"
 			read commit_msg
 			sudo git commit -m "$commit_msg" "$a"
 		continue
 		done
 	# DELETED FILES
-#	elif [ "$i" == "deleted" ]; then
+	elif [ "$i" == "deleted" ]; then
+		continue
 #		for a in $(git status | grep deleted | awk '{print $2}'); do
 #			echo "--------------------------------------------------------------------------"
-#			echo "Commit message for $a ?"
+#			echo "Commit message for DELETED FILE: $a ?"
 #			read commit_msg
 #			sudo git commit -m "$commit_msg" "$a"
 #		done
 	# UNTRACKED FILES
 #	elif [ "$i" == "Untracked" ]; then
 #		echo "--------------------------------------------------------------------------"
-#		echo "Commit message for $a ?"
+#		echo "Commit message for UNTRACKED FILE: $a ?"
 #		read commit_msg
 #		sudo git commit -m "$commit_msg" "$a"
 	# NEW FILES
 	elif [ "$i" == "new" ]; then
 		for a in $(git status | grep new | awk '{print $3}'); do
 			echo "--------------------------------------------------------------------------"
-			echo "Commit message for $a ?"
+			echo "Commit message for NEW FILE: $a ?"
 			read commit_msg
 			sudo git commit -m "$commit_msg" "$a"
 		continue
