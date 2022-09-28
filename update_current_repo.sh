@@ -20,23 +20,16 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 			echo "--------------------------------------------------------------------------"
 			echo "Commit message for MODIFIED FILE: $a ?"
 			read commit_msg
-			sudo git commit -m "$commit_msg" "$a"
-		continue
+				if [ -z "$commit_msg" ]; then
+					sudo git commit -m "N/A"
+				else
+					sudo git commit -m "$commit_msg" "$a"
+				fi
+			continue
 		done
 	# DELETED FILES
 	elif [ "$i" == "deleted" ]; then
-#		for a in $(git status | grep deleted | awk '{print $2}'); do
-#			echo "--------------------------------------------------------------------------"
-#			echo "Commit message for DELETED FILE: $a ?"
-#			read commit_msg
-			sudo git commit -m "deleted"
-#		done
-	# UNTRACKED FILES
-#	elif [ "$i" == "Untracked" ]; then
-#		echo "--------------------------------------------------------------------------"
-#		echo "Commit message for UNTRACKED FILE: $a ?"
-#		read commit_msg
-#		sudo git commit -m "$commit_msg" "$a"
+		sudo git commit -m "deleted"
 	# NEW FILES
 	elif [ "$i" == "new" ]; then
 		for a in $(git status | grep new | awk '{print $3}'); do
@@ -44,13 +37,14 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 			echo "Commit message for NEW FILE: $a ?"
 			read commit_msg
 			sudo git commit -m "$commit_msg" "$a"
-		continue
+			continue
 		done
 	elif [ "$i" == "nothing" ]; then
 		echo "--------------------------------------------------------------------------"
 		echo "No recent changes made to local repo have been detected - no updates to push."
 	fi
 done
+
 # Requesting the URL that the updates need to be pushed to.
 echo "--------------------------------------------------------------------------"
 echo "REPO NAME that the updates need to be pushed to ?"
