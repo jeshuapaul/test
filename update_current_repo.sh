@@ -25,7 +25,6 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 		done
 	# DELETED FILES
 	elif [ "$i" == "deleted" ]; then
-		continue
 #		for a in $(git status | grep deleted | awk '{print $2}'); do
 #			echo "--------------------------------------------------------------------------"
 #			echo "Commit message for DELETED FILE: $a ?"
