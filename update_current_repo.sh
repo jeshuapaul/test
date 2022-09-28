@@ -30,7 +30,7 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 #			echo "--------------------------------------------------------------------------"
 #			echo "Commit message for DELETED FILE: $a ?"
 #			read commit_msg
-			sudo git commit
+			sudo git commit -m "deleted"
 #		done
 	# UNTRACKED FILES
 #	elif [ "$i" == "Untracked" ]; then
