@@ -2,8 +2,9 @@
 
 ### Based off of - https://www.freecodecamp.org/news/pushing-to-github-made-simple-enough-for-poets/
 
-# Go into the directory that you are working in.
+# Go into the directory that you are working in and set the perms of the files to my local user.
 cd $(pwd)
+sudo chown jesh:jesh *
 
 # Checking if any changes have been made to the local repo and then making a decision based on that.
 for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
