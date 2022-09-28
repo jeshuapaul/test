@@ -7,7 +7,24 @@ cd $(pwd)
 
 # Checking if any changes have been made to the local repo and then making a decision based on that.
 for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
-	if [ "$i" == "deleted" ] || [ "$i" == "Untracked" ] || [ "$i" == "modified" ]; then
+
+	if [ "$i" == "modified" ]; then
+		for a in $(git status | grep modified | awk '{print $2}'); do
+			echo "--------------------------------------------------------------------------"
+			echo "Any specific commit message for $a ?"
+			read commit_msg
+			sudo git commit -m "$commit_msg" "$a"
+
+		done
+			# This does some git pull and git push magic, to ensure that the contents of your new Github repository, and the folder on you local system are the same.
+			sudo git remote -v
+
+			# The last word in the command 'main', is not a fixed entry when running git push. It can be replaced with any relevant 'branch_name' that you are using.
+			sudo git push origin main
+			break
+
+
+	elif [ "$i" == "deleted" ] || [ "$i" == "Untracked" ] || [ "$i" == "modified" ]; then
 		# This will initialize the folder/repository that you have on your local computer system.
 		sudo git init
 
@@ -27,20 +44,6 @@ for i in $(sudo git status | awk '{print $1}' | cut -f1 -d ":"); do
 		# The last word in the command 'main', is not a fixed entry when running git push. It can be replaced with any relevant 'branch_name' that you are using.
 		sudo git push origin main
 		break
-	elif [ "$i" == "modified" ]; then
-		for a in $(git status | grep modified | awk '{print $2}'); do
-			echo "--------------------------------------------------------------------------"
-			echo "Any specific commit message for $a ?"
-			read commit_msg
-			sudo git commit -m "$commit_msg" "$a"
-
-			# This does some git pull and git push magic, to ensure that the contents of your new Github repository, and the folder on you local system are the same.
-			sudo git remote -v
-
-			# The last word in the command 'main', is not a fixed entry when running git push. It can be replaced with any relevant 'branch_name' that you are using.
-			sudo git push origin main
-			break
-		done
 
 	elif [ "$i" == "nothing" ]; then
 		echo "--------------------------------------------------------------------------"
